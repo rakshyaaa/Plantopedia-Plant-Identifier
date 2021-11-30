@@ -12,16 +12,25 @@ def application(request):
 def predictImage(request):
     if request.method == "POST":
         print("post method")
-        form=ImageForm(request.POST,request.FILES)
+        form=ImageForm(data=request.POST,files=request.FILES)
         if form.is_valid():
+            print('valid')
             form.save()
             obj=form.instance
-            p = plantPredict()
-            p.prediction(obj.image.url)
+            print(obj)
+
+            # p = plantPredict()
+            # p.prediction(obj.image.url)
+
+            return render(request, "index.html", {'obj': obj})
+
+
+
+        else:
+            print('invalid')
     else:
         print("Get method")
         form=ImageForm()
         img=Image.objects.all()
-    return render(request,"index.html", {})
+    return render(request,"index.html", {'form':form, 'img':img})
 
-    return render(request, 'index.html', {})

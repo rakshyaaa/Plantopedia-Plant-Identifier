@@ -17,10 +17,16 @@
                     <form method = "post" enctype = "multipart/form-data" action="predictImage">
                         {% csrf_token %}
                         <div class='no-display'>
-                        <input id='file-input'
+<!--                        <input id='file-input'-->
+<!--                            class='no-display'-->
+<!--                            type='file'-->
+<!--                            name='file'-->
+<!--                            accept='image/*'-->
+<!--                            onchange='showPicked(this)'>-->
+                            <input id='file-input'
                             class='no-display'
                             type='file'
-                            name='file'
+                            name='image'
                             accept='image/*'
                             onchange='showPicked(this)'>
                         </div>
@@ -31,7 +37,7 @@
                         </div>
 
                         <div>
-                            <img id='image-picked' src = "{{obj.image.url}}" class='no-display' alt='Chosen Image' height='200'>
+                            <img id='image-picked'  class='no-display' alt='Chosen Image' height='200'>
                         </div>
 
                         <div class='analyze'>
