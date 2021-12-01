@@ -18,7 +18,6 @@ def predictImage(request):
             form.save()
             obj=form.instance
             print(obj)
-
             # p = plantPredict()
             # p.prediction(obj.image.url)
 
