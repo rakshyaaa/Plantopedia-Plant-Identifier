@@ -1,9 +1,11 @@
 from django.urls import path
 from . import views
 
+app_name = "applicationPredict"
+
 urlpatterns = [
-    path('', views.application, name='application'),
-    path('predictImage', views.predictImage, name='predictImage')
+    path('', views.application, name='predict'),
+    # path('predictImage', views.predictImage, name='predictImage')
 ]
 
 

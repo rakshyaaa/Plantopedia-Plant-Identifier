@@ -4,6 +4,7 @@
         <title>{% block title %}Plantopedia{% endblock %}</title>
         {% load static %}
         <link rel='stylesheet' href="{%static 'css/style.css' %}">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="{%static 'js/script.js' %}"></script>
         <style>
             @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100&display=swap');
@@ -14,15 +15,9 @@
             <div class='center'>
                 <div class='title'>Plantopedia&#127807;</div>
                 <div class='content'>
-                    <form method = "post" enctype = "multipart/form-data" action="predictImage">
+                    <form method = "post" enctype = "multipart/form-data" action="{% url 'applicationPredict:predict' %}">
                         {% csrf_token %}
                         <div class='no-display'>
-<!--                        <input id='file-input'-->
-<!--                            class='no-display'-->
-<!--                            type='file'-->
-<!--                            name='file'-->
-<!--                            accept='image/*'-->
-<!--                            onchange='showPicked(this)'>-->
                             <input id='file-input'
                             class='no-display'
                             type='file'
@@ -41,17 +36,33 @@
                         </div>
 
                         <div class='analyze'>
-<!--                             <button id='analyze-button' class='analyze-button' type='submit' onclick='analyze()'>Analyze</button>-->
-                            <button id='analyze-button' class='analyze-button' type='submit'>Analyze</button>
+                            <button id='analyze-button' class='analyze-button' type='submit' onclick='analyze()'>Analyze</button>
                         </div>
                     </form>
 
                     <div class='result-label'>
-                        <label id='result-label'></label>
+                        <label id='result-label'> {{ result }}</label>
                     </div>
-                    <div class='result-accuracy'>
-                        <label id='result-accuracy'></label>
+                    <div class='info'>
+                        <label id='result-info'> {{ info }}</label>
                     </div>
+
+                    {% if info %}
+                    <div>
+                        <label id='buttons'>
+                            Was I right???????
+                        </label>
+                        <button class='yes-no-button' id = "yes" onclick="final(this)">Yes</button>
+                        <button class='yes-no-button' id = "no" onclick="final(this)">No</button>
+                    </div>
+
+                    <div id = "finalBlockYes" class = "invisible">
+                        <a href = "{% url 'applicationPredict:predict' %}"> Visit again.</a>
+                    </div>
+                    <div id = "finalBlockNo" class = "invisible">
+                        <p>Hehe. I'm learning</p>
+                    </div>
+                    {% endif %}
                 </div>
             </div>
         </div>
