@@ -1,8 +1,6 @@
 var el = x => document.getElementById(x);
 
-function showPicker() {
-  el("file-input").click();
-}
+function showPicker(inputId) { el('file-input').click(); }
 
 function showPicked(input) {
   el("upload-label").innerHTML = input.files[0].name;
@@ -12,19 +10,15 @@ function showPicked(input) {
     el("image-picked").className = "";
   };
   reader.readAsDataURL(input.files[0]);
-  $(".analyze-btn").addClass("visible");
 }
+
 
 function analyze() {
-  el("analyze-button").innerHTML = "Analyzing...";
-  el("imageForm").submit();
-  
+    var uploadFiles = el('file-input').files;
+    if (uploadFiles.length != 1) alert('Please select an image to analyze!');
+    el('analyze-button').innerHTML = 'Analyzing...';
 }
 
-function askUser() {
-    $(".form").css("display","none");
-    $(".displayinfo").addClass("visible");
-}
 
 function final(inp) {
   if(inp.id == "yes"){

@@ -4,9 +4,10 @@
         <title>{% block title %}Plantopedia{% endblock %}</title>
         {% load static %}
         <link rel='stylesheet' href="{%static 'css/style.css' %}">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="{%static 'js/script.js' %}"></script>
         <style>
-            @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100&display=swap');
+            @import url('https://fonts.googleapis.com/css2?family=Quicksand&family=Roboto:wght@100;500&display=swap');
          </style>
     </head>
     <body>
@@ -14,30 +15,54 @@
             <div class='center'>
                 <div class='title'>Plantopedia&#127807;</div>
                 <div class='content'>
-                    <div class='no-display'>
-                        <input id='file-input'
+                    <form method = "post" enctype = "multipart/form-data" action="{% url 'applicationPredict:predict' %}">
+                        {% csrf_token %}
+                        <div class='no-display'>
+                            <input id='file-input'
                             class='no-display'
                             type='file'
-                            name='file'
+                            name='image'
                             accept='image/*'
                             onchange='showPicked(this)'>
-                    </div>
-                    <button class='choose-file-button' type='button' onclick='showPicker()'>Select Image</button>
-                    <div class='upload-label'>
-                        <label id='upload-label'>No file chosen</label>
-                    </div>
-                    <div>
-                        <img id='image-picked' class='no-display' alt='Chosen Image' height='200'>
-                    </div>
-                    <div class='analyze'>
-                        <button id='analyze-button' class='analyze-button' type='button' onclick='analyze()'>Analyze</button>
-                    </div>
+                        </div>
+                        <button class='choose-file-button' type='button' onclick='showPicker()'>Select Image</button>
+
+                        <div class='upload-label'>
+                            <label id='upload-label'>No file chosen</label>
+                        </div>
+
+                        <div>
+                            <img id='image-picked'  class='no-display' alt='Chosen Image' height='200'>
+                        </div>
+
+                        <div class='analyze'>
+                            <button id='analyze-button' class='analyze-button' type='submit' onclick='analyze()'>Analyze</button>
+                        </div>
+                    </form>
+
                     <div class='result-label'>
-                        <label id='result-label'></label>
+                        <label id='result-label'> {{ result }}</label>
                     </div>
-                    <div class='result-accuracy'>
-                        <label id='result-accuracy'></label>
+                    <div class='info'>
+                        <label id='result-info'> {{ info }}</label>
                     </div>
+
+                    {% if info %}
+                    <div>
+                        <label id='buttons'>
+                            Was I right???????
+                        </label>
+                        <button class='yes-no-button' id = "yes" onclick="final(this)">Yes</button>
+                        <button class='yes-no-button' id = "no" onclick="final(this)">No</button>
+                    </div>
+
+                    <div id = "finalBlockYes" class = "invisible">
+                        <a href = "{% url 'applicationPredict:predict' %}"> Visit again.</a>
+                    </div>
+                    <div id = "finalBlockNo" class = "invisible">
+                        <p>Hehe. I'm learning</p>
+                    </div>
+                    {% endif %}
                 </div>
             </div>
         </div>

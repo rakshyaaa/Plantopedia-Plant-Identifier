@@ -7,14 +7,16 @@ class plantPredict:
     def __init__(self):
         path= ('./models')
         self.learn = load_learner(path = path)
-        # print(learn)
+        # print(self.learn)
 
     def prediction(self, image):
-
+        # print(image)
+        # print(type(image))
         img_pil = im.open(image) #image temporary file to pillow object
-        img_tensor = T.ToTensor()(img_pil) #pillow object tensor
+        img_tensor = T.ToTensor()(img_pil) #pillow object to tensor
         img_fastai = Image(img_tensor)
         pred_class,pred_idx,outputs = self.learn.predict(img_fastai)
+        print(pred_class)
         outputs = torch.max(outputs)
         probabilility = (float(outputs))
         percentage = round((probabilility * 100),3)

@@ -1,68 +1,94 @@
-<html lang='en'>
+<!DOCTYPE html>
+<html>
     <head>
-        <meta charset='UTF-8'>
-        <title>{% block title %}Plantopedia{% endblock %}</title>
-        {% load static %}
-        <link rel='stylesheet' href="{%static 'css/style.css' %}">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <script src="{%static 'js/script.js' %}"></script>
-        <style>
-            @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100&display=swap');
-         </style>
+            <title>{% block title %}Plantopedia{% endblock %}</title>
+            {% load static %}
+            <meta charset='utf-8'>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <link rel='stylesheet' href="{%static 'css/style.css' %}">
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+            <script src="{%static 'js/script.js' %}"></script>
+            <style>
+                @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100&display=swap');
+             </style>
+
+             {% if result %}
+             <script>
+                 location.hash = "#info-pop-up";
+             </script>
+             {% endif %}
     </head>
     <body>
-        <div>
-            <div class='center'>
-                <div class='title'>Plantopedia&#127807;</div>
-                <div class='content'>
-                    <form method = "post" enctype = "multipart/form-data" action="{% url 'applicationPredict:predict' %}">
-                        {% csrf_token %}
-                        <div class='no-display'>
-                            <input id='file-input'
+        <div class = "content">
+            <div class = "header">
+                <div class = "title">
+                    <a href = "{% url 'applicationPredict:predict' %}" ><h2>Plantopedia &#127807</h2></a>
+                </div>
+                <div class = "info">
+                    <p> Hi. I'm IKIA. I know about plants.</p>
+                </div>
+            </div>
+        
+
+            <div class = "analyze">
+                <form id = "imageForm" method = "post" enctype = "multipart/form-data" action="{% url 'applicationPredict:predict' %}">
+                    {% csrf_token %}
+                    <div class = "form">
+                        <input id='file-input'
                             class='no-display'
                             type='file'
                             name='image'
-                            accept='image/*'
+                            accept='image/*' 
                             onchange='showPicked(this)'>
-                        </div>
-                        <button class='choose-file-button' type='button' onclick='showPicker()'>Select Image</button>
-
-                        <div class='upload-label'>
+            
+                        <div class = "choose-file">
+                            <a class = "btn choose-file-btn" onclick = 'showPicker()'> <p>Select Image</p></a>
+                            <br>
                             <label id='upload-label'>No file chosen</label>
                         </div>
-
-                        <div>
-                            <img id='image-picked'  class='no-display' alt='Chosen Image' height='200'>
+            
+                        <div class="picked-image-analyze">
+                            <img id='image-picked' class='no-display' alt='Chosen Image' height='200'>
+                            <a class = "btn analyze-btn no-display" onclick = 'analyze()'> <p id = "analyze-button">Analyze</p></a>
                         </div>
-
-                        <div class='analyze'>
-                            <button id='analyze-button' class='analyze-button' type='submit' onclick='analyze()'>Analyze</button>
-                        </div>
-                    </form>
-
-                    <div class='result-label'>
-                        <label id='result-label'> {{ result }}</label>
                     </div>
-                    <div class='info'>
-                        <label id='result-info'> {{ info }}</label>
+                </form>
+            
+            
+            <div class = "overlay" id = "info-pop-up">
+                <div class = "popup">
+                    <div class = "popup-head">
+                        <p> {{ result }} </p>
+                        <a class = "close" href = "#askUser" onclick="askUser()">&times;</a>
                     </div>
 
-                    {% if info %}
-                    <div>
+                    <div class = "content">
+                        {{ info }}
+                    </div>
+                </div>
+            </div>
+
+            <div class = "displayinfo" id = "#askUser">
+                <div class = "display-info-content">
+                    <div class= "label">
                         <label id='buttons'>
-                            Was I right???????
+                            Was I right??
                         </label>
-                        <button class='yes-no-button' id = "yes" onclick="final(this)">Yes</button>
-                        <button class='yes-no-button' id = "no" onclick="final(this)">No</button>
+                        <br>
+                        <div class = "yes-no-btns">
+                            <a class='yes-no-button btn' id = "yes" onclick="final(this)">Yes</a>
+                            <a class='yes-no-button btn' id = "no" onclick="final(this)">No</a>
+                        </div>
+
+                    </div>
+                    <div id = "finalBlockYes" class = "no-display">
+                        <a class = "reload-index" href = "{% url 'applicationPredict:predict' %}">Visit Again.</a>
+                    </div>
+                    <div id = "finalBlockNo" class = "no-display"> Hehe. I'm learning.
+                        <br>
+                        <a  class = "reload-index" href = "{% url 'applicationPredict:predict' %}">Give me a new plant.</a>
                     </div>
 
-                    <div id = "finalBlockYes" class = "invisible">
-                        <a href = "{% url 'applicationPredict:predict' %}"> Visit again.</a>
-                    </div>
-                    <div id = "finalBlockNo" class = "invisible">
-                        <p>Hehe. I'm learning</p>
-                    </div>
-                    {% endif %}
                 </div>
             </div>
         </div>
