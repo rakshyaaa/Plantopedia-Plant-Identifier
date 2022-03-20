@@ -19,41 +19,47 @@
              {% endif %}
     </head>
     <body>
-        <div class = "content">
-            <div class = "header">
-                <div class = "title">
-                    <a href = "{% url 'applicationPredict:predict' %}" ><h2>Plantopedia &#127807</h2></a>
-                </div>
-                <div class = "info">
-                    <p> Hi. I'm IKIA. I know about plants.</p>
-                </div>
-            </div>
-        
-
-            <div class = "analyze">
-                <form id = "imageForm" method = "post" enctype = "multipart/form-data" action="{% url 'applicationPredict:predict' %}">
-                    {% csrf_token %}
-                    <div class = "form">
-                        <input id='file-input'
-                            class='no-display'
-                            type='file'
-                            name='image'
-                            accept='image/*' 
-                            onchange='showPicked(this)'>
-            
-                        <div class = "choose-file">
-                            <a class = "btn choose-file-btn" onclick = 'showPicker()'> <p>Select Image</p></a>
-                            <br>
-                            <label id='upload-label'>No file chosen</label>
-                        </div>
-            
-                        <div class="picked-image-analyze">
-                            <img id='image-picked' class='no-display' alt='Chosen Image' height='200'>
-                            <a class = "btn analyze-btn no-display" onclick = 'analyze()'> <p id = "analyze-button">Analyze</p></a>
-                        </div>
+        <div class = "wholePage" >
+            <div class = "content">
+                <div class = "header">
+                    <div class = "title">
+                        <a href = "{% url 'applicationPredict:predict' %}" ><h2>Plantopedia &#127807</h2></a>
                     </div>
-                </form>
+                    <div class = "info">
+                        <p> Hi. I'm IKIA. I know about plants.</p>
+                    </div>
+                </div>
             
+    
+                <div class = "analyze">
+                    <form id = "imageForm" method = "post" enctype = "multipart/form-data" action="{% url 'applicationPredict:predict' %}">
+                        {% csrf_token %}
+                        <div class = "form">
+                            <input id='file-input'
+                                class='no-display'
+                                type='file'
+                                name='image'
+                                accept='image/*' 
+                                onchange='showPicked(this)'>
+                
+                            <div class = "choose-file">
+                                <a class = "btn choose-file-btn" onclick = 'showPicker()'> <p>Select Image</p></a>
+                                <br>
+                                <label id='upload-label'>No file chosen</label>
+                            </div>
+                
+                            <div class="picked-image-analyze">
+                                <img id='image-picked' class='no-display' alt='Chosen Image' height='200'>
+                                <a class = "btn analyze-btn no-display" onclick = 'analyze()'> <p id = "analyze-button">Analyze</p></a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class = "plantImage">
+                    <img src = " {% static 'images/plants.png' %}" alt = "plants">
+                </div>
+        
+        
             
             <div class = "overlay" id = "info-pop-up">
                 <div class = "popup">
@@ -79,7 +85,6 @@
                             <a class='yes-no-button btn' id = "yes" onclick="final(this)">Yes</a>
                             <a class='yes-no-button btn' id = "no" onclick="final(this)">No</a>
                         </div>
-
                     </div>
                     <div id = "finalBlockYes" class = "no-display">
                         <a class = "reload-index" href = "{% url 'applicationPredict:predict' %}">Visit Again.</a>
